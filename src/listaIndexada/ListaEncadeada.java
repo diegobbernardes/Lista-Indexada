@@ -1,125 +1,109 @@
 package listaIndexada;
 
-public class ListaEncadeada implements Iterable<Pessoa> {
-	
+public class ListaEncadeada<T> implements Iterable<T> {
 	private class Node {
-		public final Pessoa dado;
+		private T data;
 		private Node next;
 		
-		public Node(Pessoa dado) {
-			this.dado = dado;
-			this.next = null;
-		}
-		
-		public Node getNext() {
-			return next;
-		}
-		
-		public void setNext(Node next) {
-			this.next = next;
+		public Node(T value) {
+			data = value;
 		}
 	}
 	
-	private class ListaIterator implements Iterador {
+	private class ListIterator implements Iterador<T> {
 		private Node current = null;
 		private Node previous = null;
-
+		
 		@Override
 		public boolean hasNext() {
 			if (current == null)
 				return head != null;
-			return current.getNext() != null;
+			return current.next != null;
 		}
-
 		@Override
-		public Pessoa next() {
+		public T next() {
+			if (!hasNext())
+				throw new IllegalStateException("Sem next!");
+			
 			if (current == null) {
 				current = head;
 			} else {
 				previous = current;
-				current = current.getNext();
+				current = current.next;
 			}
-			return current.dado;
+			return current.data;
 		}
-
 		@Override
 		public void remove() {
 			if (current == null) {
-				throw new IllegalStateException("Call next() first.");
+				throw new IllegalStateException("Use next()!");
 			}
+			Node next = current.next;
+			
 			if (previous == null) {
-				head = current.getNext();
+				head = next;
+			} else {
+				previous.next = next;
 			}
-			previous.setNext(current.getNext());
-			current = previous.getNext();
+			if (next == null) {
+				tail = previous;
+			}
 		}
-
 		@Override
-		public void insertAfter(Pessoa dado) {
+		public void append(T dado) {
 			if (current == null) {
-				throw new IllegalStateException("Call next()!");
+				throw new IllegalStateException("Use next()!");
 			}
-				
+			
 			Node node = new Node(dado);
 			Node next = current.next;
-			node.setNext(next);
-			current.setNext(node);
-			if (next == null) {
+			
+			node.next = next;
+			current.next = node;
+			
+			if (current == tail) {
 				tail = node;
 			}
 		}
-
 		@Override
-		public void insertBefore(Pessoa dado) {
+		public void insert(T dado) {
 			if (current == null) {
-				throw new IllegalStateException("Call next()!");
+				throw new IllegalStateException("Use next()!");
 			}
-				
+			
 			Node node = new Node(dado);
-			node.setNext(current);
-			if (previous == null) {
+			
+			node.next = current;
+			if (previous != null)
+				previous.next = node;
+			else {
 				head = node;
-			} else {
-				previous.setNext(node);
 			}
-			previous = node;
 		}
 	}
 	
 	private Node head;
 	private Node tail;
-	
-	public void append(Pessoa dado) {
-		Node node = new Node(dado);
-		if (tail != null) {
-			tail.setNext(node);
-		} else {
-			head = node;
-		}
-		tail = node;
+
+	void append(T value) {
+		Node novo = new Node(value);
+		if (tail != null)
+			tail.next = novo;
+		else
+			head = novo;
+		tail = novo;
 	}
 
-	public void pushFront(Pessoa dado) {
-		Node node = new Node(dado);
-		if (head != null) {
-			node.setNext(head);
-		} else {
-			tail = node;
-		}
-		head = node;
+	void pushFront(T value) {
+		Node novo = new Node(value);
+		novo.next = head;
+		if (head == null)
+			tail = novo;
+		head = novo;
 	}
 	
-	public Pessoa popFront() {
-		if (head == null) {
-			throw new RuntimeException("Lista vazia!");
-		}
-		Pessoa dado = head.dado;
-		head = head.next;
-		return dado;
-	}
-	
-	@Override
-	public Iterador iterator() {
-		return new ListaIterator();
+	public Iterador<T> iterator() {
+		return new ListIterator();
 	}
 }
+

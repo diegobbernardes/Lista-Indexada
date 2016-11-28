@@ -2,7 +2,7 @@ package listaIndexada;
 
 public class TesteListaEncadeada {
 	public static void main(String[] args) {
-		ListaEncadeada lista = new ListaEncadeada();
+		ListaEncadeada<Pessoa> lista = new ListaEncadeada<>();
 		Pessoa pessoa = new Pessoa(1,"Andre");
 		lista.append(pessoa);
 		pessoa = new Pessoa(2,"B");
@@ -14,17 +14,14 @@ public class TesteListaEncadeada {
 		pessoa = new Pessoa(5,"e");
 		lista.append(pessoa);
 		
-		Iterador iter = lista.iterator();
-		while (iter.hasNext()) {
-			if (iter.next().getNome().equals("B")) {
-				pessoa = new Pessoa(6,"f");
-				iter.insertBefore(pessoa);
-				pessoa = new Pessoa(7,"g");
-				iter.insertAfter(pessoa);
-				iter.remove();
-				break;
-			}
-		}
+		Iterador<Pessoa> iter = lista.iterator();
+		iter.next();		
+		System.out.println(iter.next());
+		pessoa = new Pessoa(6,"f");
+		iter.insert(pessoa);
+		iter.next();
+		pessoa = new Pessoa(7,"g");
+		iter.insert(pessoa);
 		
 		for (Pessoa s : lista) {
 			System.out.println(s.getNome());

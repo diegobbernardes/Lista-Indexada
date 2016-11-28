@@ -2,7 +2,10 @@ package listaIndexada;
 
 import java.util.Iterator;
 
-public interface Iterador extends Iterator<Pessoa> {
-	void insertAfter(Pessoa dado);
-	void insertBefore(Pessoa dado);
+public interface Iterador<T> extends Iterator<T> {
+	void append(T dado);
+	void insert(T dado);
+	/*T previous();
+	void setLast();
+	boolean hasPrevious();*/
 }
