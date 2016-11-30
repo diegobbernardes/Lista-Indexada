@@ -47,11 +47,9 @@ public class testeListaDuplamenteEncadeada {
 		//lista.mostraListaInicio();	
 		//System.out.println("////\\\\");
 		//lista.mostraListaFim();	
-		lista2.listaCreateSkips();
-		lista2.mostraListaInicioSkip25();
-		lista2.mostraListaFimSkip25();
-		lista2.mostraHead();
-		lista2.mostraTail();
+		//lista2.listaCreateSkips();
+		//lista2.mostraListaInicioSkip25();
+		//lista2.mostraListaFimSkip25();
 		
 	}
 	
