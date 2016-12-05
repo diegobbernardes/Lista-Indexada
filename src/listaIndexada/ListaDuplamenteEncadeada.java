@@ -23,23 +23,20 @@ public class ListaDuplamenteEncadeada<T>{
 		}
 	}
 		
-	public void buscaOtimizada(int num) {
+	public void buscaOtimizada(int numero) {
 		Node current = head;
-        boolean Found = false;
+        boolean found = false;
         int saltosOtm = 0;      
 
 		while (current != null) {
-            System.out.println("Verificando node com o valor: " + current.data);
-            
-            if ((Integer)current.getData() > num) { break; }			
-            
-            if ((Integer)current.getData() != num) {
+            //System.out.println("Verificando node com o valor: " + current.data); // debug            
+            if ((Integer)current.getData() != numero) {
             	saltosOtm++;
-            	if ((current.skip1000Next != null) && ((Integer)current.skip1000Next.data <= num)) { 
+            	if ((current.skip1000Next != null) && ((Integer)current.skip1000Next.data <= numero)) { 
                 	current = current.skip1000Next; 
-            	}else if ((current.skip100Next != null) && ((Integer)current.skip100Next.data <= num)) { 
+            	}else if ((current.skip100Next != null) && ((Integer)current.skip100Next.data <= numero)) { 
                 	current = current.skip100Next; 
-            	}else if ((current.skip25Next != null) && ((Integer)current.skip25Next.data <= num)) { 
+            	}else if ((current.skip25Next != null) && ((Integer)current.skip25Next.data <= numero)) { 
             		current = current.skip25Next; 
         		}
                 else { 
@@ -47,38 +44,35 @@ public class ListaDuplamenteEncadeada<T>{
             	}
             }
             else {
-                Found = true;
+            	found = true;
                 break;
             }            
-        }
-		
-                
-        Found = buscaNaoOtimizada(num);  
-        if (Found) {          	
+        }		                 
+        if (found) {          	
         	System.out.println("Numero de saltos otimizados:"+saltosOtm);
-    	}
-        else { 
-        	System.out.println("Numero não encontrado."); 
-    	}
+    	}        
     }
 	
-	private boolean buscaNaoOtimizada(int num) {
+	public void buscaNaoOtimizada(int numero) {
 		Node current = head;
 		int saltos = 0;
-        boolean Found = false;
+        boolean found = false;
         while (current != null) {
-        	if ((Integer)current.getData() > num) { break; }	
-        	if ((Integer)current.getData() != num) {
+        	if ((Integer)current.getData() > numero) { break; }	
+        	if ((Integer)current.getData() != numero) {
         		current = current.next; 
         		saltos++;
         	}else{
-        		Found = true;
+        		found = true;
                 break;
         	}        	
         }
-        if(Found)
+        if(found){
         	System.out.println("Numero de saltos sem otimização:"+saltos);
-        return Found;
+        }else { 
+        	System.out.println("Numero não encontrado."); 
+    	}
+        
 	}
 
 	public void listaCreateSkips(){

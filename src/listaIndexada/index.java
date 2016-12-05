@@ -8,16 +8,18 @@ public class index {
 		
 		Menu menu = new Menu();
 		
-		Opcao imprimir = new Opcao("Mostra Lista");
+		Opcao imprimirInicio = new Opcao("Mostra Lista Inicio");
+		Opcao imprimirFim = new Opcao("Mostra Lista Fim");
 		Opcao busca = new Opcao("Buscar");
 		Opcao sair = new Opcao("Sair");
 		
-		menu.addOpcao(imprimir);
+		menu.addOpcao(imprimirInicio);
+		menu.addOpcao(imprimirFim);
 		menu.addOpcao(busca);
 		menu.addOpcao(sair);
 		
 		ListaDuplamenteEncadeada<Integer> lista = new ListaDuplamenteEncadeada<>();
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i <= 10000; i++) {
 			lista.append(i);
 		}
 		lista.listaCreateSkips();
@@ -30,10 +32,15 @@ public class index {
 				case 0 :
 					lista.mostraListaInicio();
 					break;
-				case 1:
-					lista.buscaOtimizada(digita("Digite um numero para busca: "));
+				case 1 :
+					lista.mostraListaFim();
 					break;
 				case 2:
+					int numero = digita("Digite um numero para busca: ");
+					lista.buscaOtimizada(numero);
+					lista.buscaNaoOtimizada(numero);
+					break;
+				case 3:
 					System.exit(0);
 				
 			}
