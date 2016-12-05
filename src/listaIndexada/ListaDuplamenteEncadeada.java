@@ -26,9 +26,9 @@ public class ListaDuplamenteEncadeada<T>{
 	public void buscaOtimizada(int num) {
 		Node current = head;
         boolean Found = false;
-        int saltosOtm = 0;        
-		
-        while (current != null) {
+        int saltosOtm = 0;      
+
+		while (current != null) {
             System.out.println("Verificando node com o valor: " + current.data);
             
             if ((Integer)current.getData() > num) { break; }			
@@ -50,7 +50,9 @@ public class ListaDuplamenteEncadeada<T>{
                 Found = true;
                 break;
             }            
-        }        
+        }
+		
+                
         Found = buscaNaoOtimizada(num);  
         if (Found) {          	
         	System.out.println("Numero de saltos otimizados:"+saltosOtm);

@@ -17,7 +17,7 @@ public class index {
 		menu.addOpcao(sair);
 		
 		ListaDuplamenteEncadeada<Integer> lista = new ListaDuplamenteEncadeada<>();
-		for (int i = 0; i <= 10000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			lista.append(i);
 		}
 		lista.listaCreateSkips();
